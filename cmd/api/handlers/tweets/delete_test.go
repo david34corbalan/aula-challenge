@@ -30,31 +30,39 @@ func Test_DeleteTweet(t *testing.T) {
 	testCases := []tests.TestCaseHandlers{
 		{
 			Name:   "should delete a tweet successfully",
-			Method: "POST",
+			Method: "DELETE",
 			Url:    "/api/v1/tweets/1",
+			Params: gin.Params{
+				{Key: "id", Value: "1"},
+			},
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockTweetsService)
 				tweet := &domain.Tweets{
 					Comment: "my first comment",
 					UserID:  1,
 				}
-				mockService.EXPECT().Delete(gomock.Any()).Return(tweet, nil)
+				mockService.EXPECT().Delete(1).Return(tweet, nil)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusOK, w.Code)
-				var user domain.Tweets
-				err := json.Unmarshal(w.Body.Bytes(), &user)
+				var tweet domain.Tweets
+				err := json.Unmarshal(w.Body.Bytes(), &tweet)
 				assert.NoError(subTest, err)
+				assert.Equal(subTest, "my first comment", tweet.Comment)
+				assert.Equal(subTest, 1, tweet.UserID)
 			},
 			Handler: h.DeleteTweet,
 		},
 		{
 			Name:   "should return error 500",
-			Method: "POST",
+			Method: "DELETE",
 			Url:    "/api/v1/tweets/1",
+			Params: gin.Params{
+				{Key: "id", Value: "1"},
+			},
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockTweetsService)
-				mockService.EXPECT().Delete(gomock.Any()).Return(nil, common.ErrNotFound)
+				mockService.EXPECT().Delete(1).Return(nil, common.ErrNotFound)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusInternalServerError, w.Code)

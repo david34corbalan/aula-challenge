@@ -7,6 +7,7 @@ import (
 	"testing"
 	"uala/cmd/api/handlers/tweets"
 	"uala/mocks"
+	"uala/pkg/common"
 	domain "uala/pkg/tweets/domain"
 	"uala/tests"
 
@@ -28,38 +29,46 @@ func Test_GetTweet(t *testing.T) {
 
 	testCases := []tests.TestCaseHandlers{
 		{
-			Name:   "should return a user successfully",
+			Name:   "should return a tweet successfully",
 			Method: "GET",
 			Url:    "/api/v1/tweets/1",
+			Params: gin.Params{
+				{Key: "id", Value: "1"},
+			},
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockTweetsService)
 				tweet := &domain.Tweets{
 					Comment: "my first comment",
 					UserID:  1,
 				}
-				mockService.EXPECT().Get(gomock.Any()).Return(tweet, nil)
+				mockService.EXPECT().Get(1).Return(tweet, nil)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusOK, w.Code)
 				var tweet domain.Tweets
 				err := json.Unmarshal(w.Body.Bytes(), &tweet)
 				assert.NoError(subTest, err)
+				assert.Equal(subTest, "my first comment", tweet.Comment)
+				assert.Equal(subTest, 1, tweet.UserID)
 			},
 			Handler: h.GetTweet,
 		},
-		// {
-		// 	Name:   "should return error 500",
-		// 	Method: "GET",
-		// 	Url:    "/api/v1/tweets/1",
-		// 	Setup: func(mock ...interface{}) {
-		// 		mockService := mock[0].(*mocks.MockTweetsService)
-		// 		mockService.EXPECT().Get(gomock.Any()).Return(nil, common.ErrNotFound)
-		// 	},
-		// 	Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
-		// 		assert.Equal(subTest, http.StatusInternalServerError, w.Code)
-		// 	},
-		// 	Handler: h.GetUser,
-		// },
+		{
+			Name:   "should return error 500",
+			Method: "GET",
+			Url:    "/api/v1/tweets/1",
+			Params: gin.Params{
+				{Key: "id", Value: "1"},
+			},
+			Setup: func(mock ...interface{}) {
+				mockService := mock[0].(*mocks.MockTweetsService)
+				mockService.EXPECT().Get(1).Return(nil, common.ErrNotFound)
+			},
+			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
+				assert.Equal(subTest, http.StatusInternalServerError, w.Code)
+			},
+			Handler: h.GetTweet,
+		},
 	}
 
 	for _, tc := range testCases {

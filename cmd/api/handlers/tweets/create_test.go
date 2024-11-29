@@ -29,7 +29,7 @@ func Test_CreateTweet(t *testing.T) {
 
 	testCases := []tests.TestCaseHandlers{
 		{
-			Name:    "should create a tweets successfully",
+			Name:    "should create a tweet successfully",
 			Method:  "POST",
 			Url:     "/api/v1/tweets",
 			Reqbody: `{"user_id": 1, "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum"}`,
@@ -46,9 +46,11 @@ func Test_CreateTweet(t *testing.T) {
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusCreated, w.Code)
-				var tweets domain.Tweets
-				err := json.Unmarshal(w.Body.Bytes(), &tweets)
+				var tweet domain.Tweets
+				err := json.Unmarshal(w.Body.Bytes(), &tweet)
 				assert.NoError(subTest, err)
+				assert.Equal(subTest, 1, tweet.UserID)
+				assert.Equal(subTest, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum", tweet.Comment)
 			},
 			Handler: h.CreateTweet,
 		},
@@ -56,7 +58,7 @@ func Test_CreateTweet(t *testing.T) {
 			Name:    "should return error for invalid comment",
 			Method:  "POST",
 			Url:     "/api/v1/tweets",
-			Reqbody: `{"user_id": 1, "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque"}`,
+			Reqbody: `{"user_id": 1, "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque scelerisque scelerisque scelerisque"}`,
 			Setup: func(mock ...interface{}) {
 				// No setup needed for this test case
 			},
@@ -66,17 +68,17 @@ func Test_CreateTweet(t *testing.T) {
 			Handler: h.CreateTweet,
 		},
 		{
-			Name:    "should return error create tweets",
+			Name:    "should return error create tweet",
 			Method:  "POST",
 			Url:     "/api/v1/tweets",
-			Reqbody: `{"user_id": 1, "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu."}`,
+			Reqbody: `{"user_id": 1, "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum"}`,
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockTweetsService)
-				expectedUser := domain.TweetsCreate{
+				expectedTweet := domain.TweetsCreate{
 					UserID:  1,
 					Comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum",
 				}
-				mockService.EXPECT().Create(expectedUser).Return(nil, common.ErrCreate)
+				mockService.EXPECT().Create(expectedTweet).Return(nil, common.ErrCreate)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusInternalServerError, w.Code)
