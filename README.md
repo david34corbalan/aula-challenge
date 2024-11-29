@@ -3,6 +3,7 @@
 #instrucciones
 
 ```
+clonar el env
 git clone https://github.com/david34corbalan/aula-challenge.git
 cd uala-challenge
 docker compose up -d
