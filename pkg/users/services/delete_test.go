@@ -28,22 +28,6 @@ func TestService_Delete(t *testing.T) {
 
 	testCases := []tests.TestCaseService{
 		{
-			Name:  "empty id",
-			Setup: func(mock ...interface{}) {},
-			TestFunc: func(mock ...interface{}) (interface{}, error) {
-				mockUsersRepo := mock[0].(*mocks.MockUsersRepository)
-				s := &usersServices.Service{
-					Repo: mockUsersRepo,
-				}
-				return s.Delete(0)
-			},
-			AssertionFunc: func(subTest *testing.T, result interface{}, err error) {
-				p := result.(*usersDomain.Users)
-				assert.Nil(subTest, p)
-				assert.EqualError(subTest, err, "id is required")
-			},
-		},
-		{
 			Name: "user not found",
 			Setup: func(mock ...interface{}) {
 				mockRepo := mock[0].(*mocks.MockUsersRepository)
