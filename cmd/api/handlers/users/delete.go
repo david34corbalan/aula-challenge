@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"strconv"
 	"uala/cmd/api/core"
 
@@ -8,14 +9,15 @@ import (
 )
 
 func (h Handler) DeleteUser(c *gin.Context) {
-	tweetIdParam := c.Param("id")
-	tweetID, err := strconv.Atoi(tweetIdParam)
+	usertIdParam := c.Param("id")
+	userID, err := strconv.Atoi(usertIdParam)
+	fmt.Println(userID)
 	if err != nil {
 		core.RespondError(c, err)
 		return
 	}
 
-	user, err := h.UsersService.Delete(tweetID)
+	user, err := h.UsersService.Delete(userID)
 	if err != nil {
 		core.RespondError(c, err)
 		return

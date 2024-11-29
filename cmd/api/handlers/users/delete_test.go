@@ -30,30 +30,37 @@ func Test_DeleteUser(t *testing.T) {
 	testCases := []tests.TestCaseHandlers{
 		{
 			Name:   "should delete a user successfully",
-			Method: "POST",
-			Url:    "/api/v1/users/1",
+			Method: "DELETE",
+			Url:    "/api/v1/users/:id",
+			Params: gin.Params{
+				{Key: "id", Value: "2"},
+			},
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockUsersService)
-				tweet := &domain.Users{
+				user := &domain.Users{
 					ID:       1,
 					Name:     "test",
 					LastName: "test",
 					Email:    "test@test.com",
 				}
-				mockService.EXPECT().Delete(gomock.Any()).Return(tweet, nil)
+				mockService.EXPECT().Delete(gomock.Any()).Return(user, nil)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusOK, w.Code)
 				var user domain.Users
 				err := json.Unmarshal(w.Body.Bytes(), &user)
 				assert.NoError(subTest, err)
+				assert.Equal(subTest, uint(1), user.ID)
 			},
 			Handler: h.DeleteUser,
 		},
 		{
 			Name:   "should return error 500",
-			Method: "POST",
+			Method: "DELETE",
 			Url:    "/api/v1/users/1",
+			Params: gin.Params{
+				{Key: "id", Value: "1"},
+			},
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockUsersService)
 				mockService.EXPECT().Delete(gomock.Any()).Return(nil, common.ErrNotFound)

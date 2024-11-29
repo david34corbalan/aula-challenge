@@ -7,7 +7,6 @@ import (
 	"testing"
 	"uala/cmd/api/handlers/users"
 	"uala/mocks"
-	"uala/pkg/common"
 	domain "uala/pkg/users/domain"
 	"uala/tests"
 
@@ -16,7 +15,7 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-func Test_GetUser(t *testing.T) {
+func Test_UpdateUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -29,21 +28,31 @@ func Test_GetUser(t *testing.T) {
 
 	testCases := []tests.TestCaseHandlers{
 		{
-			Name:   "should return a user successfully",
-			Method: "GET",
+			Name:   "should update a user successfully",
+			Method: "PUT",
 			Url:    "/api/v1/users/1",
 			Params: gin.Params{
 				{Key: "id", Value: "1"},
 			},
+			Reqbody: `{
+				"name": "updated_name",
+				"last_name": "updated_last_name",
+				"email": "updated@test.com"
+			}`,
 			Setup: func(mock ...interface{}) {
 				mockService := mock[0].(*mocks.MockUsersService)
-				user := &domain.Users{
-					ID:       1,
-					Name:     "test",
-					LastName: "test",
-					Email:    "test@test.com",
+				userUpdate := domain.UserUpdate{
+					Name:     "updated_name",
+					LastName: "updated_last_name",
+					Email:    "updated@test.com",
 				}
-				mockService.EXPECT().Get(gomock.Any()).Return(user, nil)
+				updatedUser := &domain.Users{
+					ID:       1,
+					Name:     "updated_name",
+					LastName: "updated_last_name",
+					Email:    "updated@test.com",
+				}
+				mockService.EXPECT().Update(1, userUpdate).Return(updatedUser, nil)
 			},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
 				assert.Equal(subTest, http.StatusOK, w.Code)
@@ -51,24 +60,29 @@ func Test_GetUser(t *testing.T) {
 				err := json.Unmarshal(w.Body.Bytes(), &user)
 				assert.NoError(subTest, err)
 				assert.Equal(subTest, uint(1), user.ID)
+				assert.Equal(subTest, "updated_name", user.Name)
+				assert.Equal(subTest, "updated_last_name", user.LastName)
+				assert.Equal(subTest, "updated@test.com", user.Email)
 			},
-			Handler: h.GetUser,
+			Handler: h.UpdateUser,
 		},
 		{
-			Name:   "should return error 500",
-			Method: "GET",
+			Name:   "should return error 422 for invalid request body",
+			Method: "PUT",
 			Url:    "/api/v1/users/1",
 			Params: gin.Params{
 				{Key: "id", Value: "1"},
 			},
-			Setup: func(mock ...interface{}) {
-				mockService := mock[0].(*mocks.MockUsersService)
-				mockService.EXPECT().Get(gomock.Any()).Return(nil, common.ErrNotFound)
-			},
+			Reqbody: `{
+				"name": 123,
+				"last_name": "updated_last_name",
+				"email": "updated@test.com"
+			}`,
+			Setup: func(mock ...interface{}) {},
 			Assertionfunc: func(subTest *testing.T, w *httptest.ResponseRecorder) {
-				assert.Equal(subTest, http.StatusInternalServerError, w.Code)
+				assert.Equal(subTest, http.StatusUnprocessableEntity, w.Code)
 			},
-			Handler: h.GetUser,
+			Handler: h.UpdateUser,
 		},
 	}
 

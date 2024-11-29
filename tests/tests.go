@@ -24,9 +24,10 @@ type TestCaseHandlers struct {
 	Method        string
 	Url           string
 	Reqbody       string
-	Setup         SetupFunc
-	Assertionfunc AssertionFuncHandlers
-	Handler       HandlerFunc
+	Setup         func(...interface{})
+	Handler       gin.HandlerFunc
+	Assertionfunc func(*testing.T, *httptest.ResponseRecorder)
+	Params        gin.Params // Añadimos este campo para los parámetros de la URL
 }
 
 func RunTest(t *testing.T, tc TestCaseHandlers, mocks ...interface{}) {
@@ -44,6 +45,11 @@ func RunTest(t *testing.T, tc TestCaseHandlers, mocks ...interface{}) {
 		w := httptest.NewRecorder()
 		c, _ := gin.CreateTestContext(w)
 		c.Request = req
+
+		// Set the URL parameters if any
+		if tc.Params != nil {
+			c.Params = tc.Params
+		}
 
 		tc.Handler(c)
 
