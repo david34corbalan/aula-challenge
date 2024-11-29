@@ -1,0 +1,1342 @@
+{
+	"info": {
+		"_postman_id": "399e9607-60d7-42e4-8f78-1faead83d0fa",
+		"name": "uala",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9521648"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "index users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users?limit=10&offset=0",
+							"host": [
+								"{{url}}users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users?offset",
+									"host": [
+										"{{url}}users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 00:13:59 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Limit\",\n            \"message\": \"Limit is limit_offset\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users?limit=10&offset",
+									"host": [
+										"{{url}}users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 01:46:20 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "418"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"name\": \"user2\",\n            \"last_name\": \"user2\",\n            \"email\": \"user1@email.com\"\n        },\n        {\n            \"name\": \"user1\",\n            \"last_name\": \"user1\",\n            \"email\": \"user1@email.com\"\n        },\n        {\n            \"name\": \"user1\",\n            \"last_name\": \"user1\",\n            \"email\": \"user1@email.com\"\n        }\n    ],\n    \"limit\": 10,\n    \"offset\": 0,\n    \"count\": 3,\n    \"last_offset\": 0,\n    \"total\": 3,\n    \"total_pages\": 1,\n    \"page\": 1,\n    \"links\": {\n        \"next_offset\": 0,\n        \"prev_offset\": 0\n    },\n    \"next_pages\": {\n        \"next_page_1\": 0,\n        \"next_page_2\": 0\n    },\n    \"prev_pages\": {\n        \"prev_page_1\": 0,\n        \"prev_page_2\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update users",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user1\",\n    \"last_name\": \"last name\",\n    \"email\": \"user1@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users/1",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user1\",\n    \"last_name\": \"last name\",\n    \"email\": \"user1@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}users/1",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:19:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"user1\",\n    \"last_name\": \"last name\",\n    \"email\": \"user1@email.com\"\n}"
+						},
+						{
+							"name": "code 404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user1\",\n    \"last_name\": \"user1\",\n    \"email\": \"user1@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}users/12",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"12"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:18:22 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"user with id '12' not found\"\n}"
+						},
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    // \"name\": \"user1\",\n    // \"last_name\": \"user1\",\n    // \"email\": \"user1@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}users/12",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"12"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:18:41 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "201"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Name\",\n            \"message\": \"Name is required\"\n        },\n        {\n            \"field\": \"LastName\",\n            \"message\": \"LastName is required\"\n        },\n        {\n            \"field\": \"Email\",\n            \"message\": \"Email is required\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user1\",\n    \"last_name\": \"user1\",\n    \"email\": \"user1@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users",
+							"host": [
+								"{{url}}users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user2\",\n    \"last_name\": \"user2\",\n    \"email\": \"user1@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}users",
+									"host": [
+										"{{url}}users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 01:45:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"user2\",\n    \"last_name\": \"user2\",\n    \"email\": \"user1@email.com\"\n}"
+						},
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    // \"name\": \"user2\",\n    // \"last_name\": \"user2\",\n    // \"email\": \"user1@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}users",
+									"host": [
+										"{{url}}users"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 01:46:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "201"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Name\",\n            \"message\": \"Name is required\"\n        },\n        {\n            \"field\": \"LastName\",\n            \"message\": \"LastName is required\"\n        },\n        {\n            \"field\": \"Email\",\n            \"message\": \"Email is required\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "show user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users/1",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users/1",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:15:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"user1\",\n    \"last_name\": \"user1\",\n    \"email\": \"user1@email.com\"\n}"
+						},
+						{
+							"name": "code 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users/0",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"0"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:15:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"user with id '0' not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users/3",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users/1",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:15:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"user1\",\n    \"last_name\": \"user1\",\n    \"email\": \"user1@email.com\"\n}"
+						},
+						{
+							"name": "code 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}users/0",
+									"host": [
+										"{{url}}users"
+									],
+									"path": [
+										"0"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:15:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"user with id '0' not found\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tweets",
+			"item": [
+				{
+					"name": "index tweets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}tweets?limit=10&offset=10",
+							"host": [
+								"{{url}}tweets"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 10:52:38 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Limit\",\n            \"message\": \"Limit is limit_offset\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets?limit=10&offset=10",
+									"host": [
+										"{{url}}tweets"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Nov 2024 14:15:32 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1245"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 9989,\n            \"comment\": \"comment 9989\",\n            \"user_id\": 4,\n            \"created_at\": \"2026-01-18 19:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9988,\n            \"comment\": \"comment 9988\",\n            \"user_id\": 3,\n            \"created_at\": \"2026-01-18 18:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9987,\n            \"comment\": \"comment 9987\",\n            \"user_id\": 2,\n            \"created_at\": \"2026-01-18 17:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9986,\n            \"comment\": \"comment 9986\",\n            \"user_id\": 1,\n            \"created_at\": \"2026-01-18 16:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9985,\n            \"comment\": \"comment 9985\",\n            \"user_id\": 5,\n            \"created_at\": \"2026-01-18 15:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9984,\n            \"comment\": \"comment 9984\",\n            \"user_id\": 4,\n            \"created_at\": \"2026-01-18 14:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9983,\n            \"comment\": \"comment 9983\",\n            \"user_id\": 3,\n            \"created_at\": \"2026-01-18 13:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9982,\n            \"comment\": \"comment 9982\",\n            \"user_id\": 2,\n            \"created_at\": \"2026-01-18 12:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9981,\n            \"comment\": \"comment 9981\",\n            \"user_id\": 1,\n            \"created_at\": \"2026-01-18 11:14:49\",\n            \"updated_at\": \"\"\n        },\n        {\n            \"id\": 9980,\n            \"comment\": \"comment 9980\",\n            \"user_id\": 5,\n            \"created_at\": \"2026-01-18 10:14:49\",\n            \"updated_at\": \"\"\n        }\n    ],\n    \"limit\": 10,\n    \"offset\": 10,\n    \"count\": 9999,\n    \"last_offset\": 9990,\n    \"total\": 9999,\n    \"total_pages\": 1000,\n    \"page\": 2,\n    \"links\": {\n        \"next_offset\": 20,\n        \"prev_offset\": 0\n    },\n    \"next_pages\": {\n        \"next_page_1\": 20,\n        \"next_page_2\": 30\n    },\n    \"prev_pages\": {\n        \"prev_page_1\": 0,\n        \"prev_page_2\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "create tweet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\":\"my first comment\",\n    \"user_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}tweets",
+							"host": [
+								"{{url}}tweets"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 10:58:34 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "155"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Comment\",\n            \"message\": \"Comment is required\"\n        },\n        {\n            \"field\": \"UserID\",\n            \"message\": \"UserID is required\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"comment\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque nec scelerisque nec scelerisque\",\n    \"user_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:58:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Comment\",\n            \"message\": \"Comment is max\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"comment\":\"my first comment\",\n    \"user_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:58:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"comment\": \"my first comment\",\n    \"user_id\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "update tweet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\":\"my second comment\",\n    \"user_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}tweets/1",
+							"host": [
+								"{{url}}tweets"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 10:58:34 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "155"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Comment\",\n            \"message\": \"Comment is required\"\n        },\n        {\n            \"field\": \"UserID\",\n            \"message\": \"UserID is required\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"comment\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque nec scelerisque nec scelerisque\",\n    \"user_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:58:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Comment\",\n            \"message\": \"Comment is max\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"comment\":\"my first comment\",\n    \"user_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}tweets",
+									"host": [
+										"{{url}}tweets"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 11:58:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"comment\": \"my first comment\",\n    \"user_id\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "show tweet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}tweets/2",
+							"host": [
+								"{{url}}tweets"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/2",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:20:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "402"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"comment\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque\",\n    \"user_id\": 1,\n    \"created_at\": \"2024-11-27 11:57:32.26326754+00:00\",\n    \"updated_at\": \"2024-11-27 11:57:32.26326754+00:00\"\n}"
+						},
+						{
+							"name": "code 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/22",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										"22"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:20:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"tweet with id '22' not found\"\n}"
+						},
+						{
+							"name": "code 500",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:19:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 500,\n    \"message\": \"internal server error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "timeline tweet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}tweets/timeline/1?limit=100",
+							"host": [
+								"{{url}}tweets"
+							],
+							"path": [
+								"timeline",
+								"1"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "offset",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "code 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/2",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:20:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "402"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"comment\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Curabitur ac felis arcu. Sed vehicula, urna eu efficitur tincidunt, sapien libero hendrerit est, nec scelerisque\",\n    \"user_id\": 1,\n    \"created_at\": \"2024-11-27 11:57:32.26326754+00:00\",\n    \"updated_at\": \"2024-11-27 11:57:32.26326754+00:00\"\n}"
+						},
+						{
+							"name": "code 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/22",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										"22"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:20:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"tweet with id '22' not found\"\n}"
+						},
+						{
+							"name": "code 422",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/timeline/1",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										"timeline",
+										"1"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Nov 2024 20:24:20 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation Errors\",\n    \"code\": 422,\n    \"errors\": [\n        {\n            \"field\": \"Limit\",\n            \"message\": \"Limit is limit_offset\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "code 500",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}tweets/",
+									"host": [
+										"{{url}}tweets"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Nov 2024 22:19:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 500,\n    \"message\": \"internal server error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "detele tweet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}tweets/3",
+							"host": [
+								"{{url}}tweets"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "follow",
+			"item": [
+				{
+					"name": "create follow",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":1,\n    \"follow_id\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}follow",
+							"host": [
+								"{{url}}follow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080/api/v1/",
+			"type": "string"
+		}
+	]
+}
